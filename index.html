@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matcha & Bloom | Special Space</title>
+    <style>
+        :root {
+            --matcha-dark: #384e31;
+            --matcha-main: #587044;
+            --matcha-light: #8fbc8f;
+            --matcha-cream: #f4f7f2;
+            --pink-accent: #f3c1c6;
+            --pink-soft: #fbf0f2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--matcha-cream);
+            color: var(--matcha-dark);
+            line-height: 1.6;
+        }
+
+        /* Header / Hero Section */
+        header {
+            background: linear-gradient(135deg, var(--matcha-main), var(--matcha-dark));
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* Container Main Content */
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Section Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--matcha-light);
+        }
+
+        .card-pink {
+            border-left-color: var(--pink-accent);
+        }
+
+        .card h2 {
+            color: var(--matcha-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Interactive Flower Match */
+        .flower-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .flower-item {
+            background: var(--pink-soft);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--pink-accent);
+        }
+
+        /* Interactive Note / Surprise Button */
+        .interactive-section {
+            text-align: center;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        button {
+            background-color: var(--matcha-main);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(88, 112, 68, 0.3);
+        }
+
+        button:hover {
+            background-color: var(--matcha-dark);
+            transform: translateY(-2px);
+        }
+
+        #hidden-message {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--pink-soft);
+            border-radius: 15px;
+            border: 1px dashed var(--pink-accent);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Matcha & Bloom 🍵🌸</h1>
+        <p>Sebuah ruang kecil yang dibuat khusus untuk menyatukan dua hal favoritmu.</p>
+    </header>
+
+    <div class="container">
+        <!-- Section Matcha -->
+        <div class="card">
+            <h2>🍵 Ruang Ketenangan (Matcha Corner)</h2>
+            <p>Sama seperti segelas matcha hangat yang memberikan rasa tenang dan kehangatan, kehadiranmu selalu memberikan kenyamanan tersendiri. Manis, hangat, dan selalu menenangkan.</p>
+        </div>
+
+        <!-- Section Bunga -->
+        <div class="card card-pink">
+            <h2>🌸 Ruang Keindahan (Flower Garden)</h2>
+            <p>Bunga tidak pernah terburu-buru untuk mekar, mereka tumbuh dengan indahnya pada waktunya masing-masing. Begitu juga kamu, selalu mekar dengan keunikan dan keindahanmu sendiri.</p>
+            
+            <div class="flower-grid">
+                <div class="flower-item">
+                    <h3>🍵 + 🌸</h3>
+                    <p>Warna hijau manis & kelopak bunga yang lembut.</p>
+                </div>
+                <div class="flower-item">
+                    <h3>✨ Melati & Matcha</h3>
+                    <p>Kombinasi aroma segar dan ketenangan tiada tanding.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Surprise Section -->
+        <div class="interactive-section">
+            <h2>Pesan Rahasia 💌</h2>
+            <p style="margin-bottom: 1.5rem;">Klik tombol di bawah untuk membuka pesan khusus!</p>
+            <button onclick="showMessage()">Buka Pesan</button>
+
+            <div id="hidden-message">
+                <p><strong>"Semoga harimu selalu dihangatkan oleh segelas matcha yang nikmat dan dihiasi oleh indahnya bunga-bunga yang bermekaran."</strong></p>
+                <p style="margin-top: 10px; font-size: 0.9rem; color: #555;">Terima kasih sudah selalu menjadi sosok yang hangat! ✨</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Dibuat khusus dengan kombinasi Matcha & Bunga 🍵🌸
+    </footer>
+
+    <script>
+        function showMessage() {
+            var msg = document.getElementById("hidden-message");
+            if (msg.style.display === "none" || msg.style.display === "") {
+                msg.style.display = "block";
+            } else {
+                msg.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

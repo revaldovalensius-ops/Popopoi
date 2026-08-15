@@ -27,40 +27,62 @@
             line-height: 1.6;
         }
 
-        /* Header / Hero Section */
         header {
             background: linear-gradient(135deg, var(--matcha-main), var(--matcha-dark));
             color: white;
             text-align: center;
-            padding: 4rem 1rem;
+            padding: 3rem 1rem 2rem 1rem;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 0.5rem;
         }
 
         header p {
             font-style: italic;
             opacity: 0.9;
+            font-size: 0.95rem;
         }
 
-        /* Container Main Content */
         .container {
             max-width: 800px;
-            margin: 2rem auto;
+            margin: 1.5rem auto;
             padding: 0 1.5rem;
         }
 
-        /* Section Cards */
+        /* Music Player Section */
+        .music-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .music-card p {
+            font-size: 0.85rem;
+            color: var(--matcha-main);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        iframe {
+            border-radius: 12px;
+            border: none;
+            width: 100%;
+            height: 80px;
+        }
+
         .card {
             background: white;
             border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             border-left: 6px solid var(--matcha-light);
         }
@@ -71,13 +93,10 @@
 
         .card h2 {
             color: var(--matcha-dark);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
         }
 
-        /* Interactive Flower Match */
         .flower-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -93,11 +112,10 @@
             border: 1px solid var(--pink-accent);
         }
 
-        /* Interactive Note / Surprise Button */
         .interactive-section {
             text-align: center;
             background: white;
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
@@ -137,7 +155,7 @@
         footer {
             text-align: center;
             padding: 2rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #777;
         }
     </style>
@@ -150,13 +168,17 @@
     </header>
 
     <div class="container">
-        <!-- Section Matcha -->
+        <!-- Pemutar Musik Taylor Swift (Lover) -->
+        <div class="music-card">
+            <p>🎵 Putar Musik Suasana (Taylor Swift - Lover)</p>
+            <iframe src="https://open.spotify.com/embed/track/1dGr149jr1NetworkLStLB2i?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
         <div class="card">
             <h2>🍵 Ruang Ketenangan (Matcha Corner)</h2>
             <p>Sama seperti segelas matcha hangat yang memberikan rasa tenang dan kehangatan, kehadiranmu selalu memberikan kenyamanan tersendiri. Manis, hangat, dan selalu menenangkan.</p>
         </div>
 
-        <!-- Section Bunga -->
         <div class="card card-pink">
             <h2>🌸 Ruang Keindahan (Flower Garden)</h2>
             <p>Bunga tidak pernah terburu-buru untuk mekar, mereka tumbuh dengan indahnya pada waktunya masing-masing. Begitu juga kamu, selalu mekar dengan keunikan dan keindahanmu sendiri.</p>
@@ -173,7 +195,6 @@
             </div>
         </div>
 
-        <!-- Interactive Surprise Section -->
         <div class="interactive-section">
             <h2>Pesan Rahasia 💌</h2>
             <p style="margin-bottom: 1.5rem;">Klik tombol di bawah untuk membuka pesan khusus!</p>

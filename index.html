@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -59,7 +59,13 @@
     }
   </style>
 </head>
-<text class="text-white min-h-screen flex flex-col justify-between relative selection:bg-pink-500 selection:text-white">
+<body class="text-white min-h-screen flex flex-col justify-between relative selection:bg-pink-500 selection:text-white">
+
+  <!-- Audio Musik Latar -->
+  <audio id="bg-music" loop>
+    <!-- Lagu Piano Instrumental Romantis -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- Container Animasi Background -->
   <div id="stars-container" class="fixed inset-0 pointer-events-none z-0"></div>
@@ -162,6 +168,20 @@
   </div>
 
   <script>
+    const music = document.getElementById('bg-music');
+    let isMusicPlaying = false;
+
+    // Putar lagu saat klik pertama kali (kebijakan browser melarang autoplay tanpa interaksi)
+    function playAudio() {
+      if (!isMusicPlaying) {
+        music.play().then(() => {
+          isMusicPlaying = true;
+        }).catch(() => {});
+      }
+    }
+
+    document.body.addEventListener('click', playAudio, { once: true });
+
     // Data kata-kata pesan tiap bunga
     const flowerMessages = {
       1: {
@@ -184,6 +204,7 @@
 
     // Fungsi Modal Interaktif
     function openModal(id) {
+      playAudio();
       const modal = document.getElementById('flower-modal');
       const modalCard = document.getElementById('modal-card');
       const modalText = document.getElementById('modal-text');

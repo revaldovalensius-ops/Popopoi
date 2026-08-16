@@ -1,266 +1,213 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bukit Bunga untuk Michelle</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Heart Of Love</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(to bottom, #0f172a, #2e1065, #4c1d95);
-      overflow-x: hidden;
+      background-color: #f3f3f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
     }
-    .font-cursive {
-      font-family: 'Sacramento', cursive;
+
+    .container {
+      position: relative;
+      width: 500px;
+      height: 450px;
+      background-color: #ffffff;
+      border-radius: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    
-    /* Animasi Bintang */
-    .star {
+
+    /* Karakter Stickman */
+    .character {
       position: absolute;
-      background-color: white;
-      border-radius: 50%;
-      animation: twinkle linear infinite;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.2); }
+      left: 50px;
+      bottom: 60px;
+      width: 100px;
+      height: 120px;
     }
 
-    /* Animasi Kelopak Bunga Gugur */
-    .petal {
-      position: fixed;
-      top: -10%;
-      background: linear-gradient(135deg, #ffb7c5, #ff69b4);
-      border-radius: 15px 0px 15px 0px;
-      opacity: 0.7;
-      pointer-events: none;
-      z-index: 10;
-      animation: fall linear infinite;
-    }
-    @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg) translateX(0);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(105vh) rotate(360deg) translateX(100px);
-        opacity: 0.2;
-      }
+    /* Teks "biu" di dekat tiupan */
+    .biu-text {
+      position: absolute;
+      left: 140px;
+      bottom: 125px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      animation: fadeIn 0.5s ease-in forwards;
+      animation-delay: 0.8s;
+      opacity: 0;
     }
 
-    /* Efek Mekar Bunga */
-    .flower-btn {
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* CSS seperti yang ada di video (lanjutan & penyesuaian) */
+    .love.block {
+      right: 0;
+      position: absolute;
+      visibility: hidden;
+      background-color: yellow;
     }
-    .flower-btn:hover {
-      transform: scale(1.15) rotate(5deg);
+
+    .love.block div {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      /* Menggunakan ikon SVG Love bawaan agar tidak perlu download gambar */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e0245e'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;
+      transform: scale(0);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    }
+
+    .love.block div.show {
+      opacity: 1;
+      transform: scale(0.6);
+    }
+
+    /* Area Formasi Hati */
+    #heart-container {
+      position: absolute;
+      right: 40px;
+      top: 40px;
+      width: 260px;
+      height: 260px;
+    }
+
+    /* Teks "I Love You" */
+    .love-text {
+      position: absolute;
+      bottom: 70px;
+      right: 75px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.8s ease;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .love-text.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
   </style>
 </head>
-<body class="text-white min-h-screen flex flex-col justify-between relative selection:bg-pink-500 selection:text-white">
+<body>
 
-  <!-- Audio Musik Latar -->
-  <audio id="bg-music" loop>
-    <!-- Lagu Piano Instrumental Romantis -->
-    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
-  </audio>
+  <div class="container">
+    <!-- SVG Stickman Character -->
+    <svg class="character" viewBox="0 0 100 120">
+      <!-- Kepala -->
+      <circle cx="45" cy="35" r="22" stroke="#000" stroke-width="3.5" fill="none" />
+      <!-- Mata -->
+      <circle cx="40" cy="32" r="2.5" fill="#000" />
+      <circle cx="52" cy="32" r="2.5" fill="#000" />
+      <!-- Senyum -->
+      <path d="M 40 42 Q 46 47 52 42" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <!-- Badan -->
+      <path d="M 45 57 Q 40 85 40 105" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <!-- Tangan Kiri (Meniup/Pose) -->
+      <path d="M 42 70 C 55 65, 65 60, 75 58" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <!-- Tangan Kanan -->
+      <path d="M 42 70 C 35 80, 25 85, 20 90" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <!-- Kaki Kiri -->
+      <path d="M 40 105 L 30 118" stroke="#000" stroke-width="3.5" stroke-linecap="round" />
+      <!-- Kaki Kanan -->
+      <path d="M 40 105 L 52 118" stroke="#000" stroke-width="3.5" stroke-linecap="round" />
+    </svg>
 
-  <!-- Container Animasi Background -->
-  <div id="stars-container" class="fixed inset-0 pointer-events-none z-0"></div>
-  <div id="petals-container" class="fixed inset-0 pointer-events-none z-10"></div>
+    <div class="biu-text">biu~</div>
 
-  <!-- Header / Judul Utama -->
-  <header class="relative z-20 text-center pt-12 pb-6 px-4">
-    <h1 class="font-cursive text-5xl md:text-7xl font-bold text-pink-300 drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)] mb-2">
-      Bukit Bunga untuk Michelle
-    </h1>
-    <p class="text-pink-100/80 text-sm md:text-base tracking-wide">
-      Klik setiap bunga di bawah ini untuk melihat pesan rahasia 🌸
-    </p>
-  </header>
+    <!-- Container tempat ditempatkannya elemen love -->
+    <div id="heart-container" class="love block"></div>
 
-  <!-- Area Taman Bunga Interaktif -->
-  <main class="relative z-20 max-w-4xl mx-auto px-4 py-8 w-full flex-grow">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 justify-items-center">
-      
-      <!-- Bunga 1 -->
-      <button onclick="openModal(1)" class="flower-btn flex flex-col items-center group focus:outline-none">
-        <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-pink-500/20 backdrop-blur-md border-2 border-pink-300/40 flex items-center justify-center shadow-lg shadow-pink-500/30 group-hover:shadow-pink-400/60">
-          <span class="text-5xl md:text-6xl filter drop-shadow">🌸</span>
-        </div>
-        <span class="mt-3 text-xs md:text-sm font-semibold tracking-wider text-pink-200 bg-pink-950/60 px-3 py-1 rounded-full border border-pink-500/30">
-          Bunga Pertama
-        </span>
-      </button>
-
-      <!-- Bunga 2 -->
-      <button onclick="openModal(2)" class="flower-btn flex flex-col items-center group focus:outline-none">
-        <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-purple-500/20 backdrop-blur-md border-2 border-purple-300/40 flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:shadow-purple-400/60">
-          <span class="text-5xl md:text-6xl filter drop-shadow">🌺</span>
-        </div>
-        <span class="mt-3 text-xs md:text-sm font-semibold tracking-wider text-purple-200 bg-purple-950/60 px-3 py-1 rounded-full border border-purple-500/30">
-          Bunga Kedua
-        </span>
-      </button>
-
-      <!-- Bunga 3 -->
-      <button onclick="openModal(3)" class="flower-btn flex flex-col items-center group focus:outline-none">
-        <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-rose-500/20 backdrop-blur-md border-2 border-rose-300/40 flex items-center justify-center shadow-lg shadow-rose-500/30 group-hover:shadow-rose-400/60">
-          <span class="text-5xl md:text-6xl filter drop-shadow">🌷</span>
-        </div>
-        <span class="mt-3 text-xs md:text-sm font-semibold tracking-wider text-rose-200 bg-rose-950/60 px-3 py-1 rounded-full border border-rose-500/30">
-          Bunga Ketiga
-        </span>
-      </button>
-
-      <!-- Bunga 4 -->
-      <button onclick="openModal(4)" class="flower-btn flex flex-col items-center group focus:outline-none">
-        <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-yellow-500/20 backdrop-blur-md border-2 border-yellow-300/40 flex items-center justify-center shadow-lg shadow-yellow-500/30 group-hover:shadow-yellow-400/60">
-          <span class="text-5xl md:text-6xl filter drop-shadow">🌻</span>
-        </div>
-        <span class="mt-3 text-xs md:text-sm font-semibold tracking-wider text-yellow-200 bg-yellow-950/60 px-3 py-1 rounded-full border border-yellow-500/30">
-          Bunga Keempat
-        </span>
-      </button>
-
-    </div>
-
-    <!-- Petunjuk Scroll Down -->
-    <div class="text-center mt-20 mb-12 animate-bounce">
-      <p class="text-pink-300 text-sm tracking-widest uppercase font-semibold">Scroll ke bawah ya</p>
-      <span class="text-2xl">👇</span>
-    </div>
-
-    <!-- Section Kotak Pesan / Ungkapan Perasaan -->
-    <section class="max-w-2xl mx-auto mt-10 mb-20">
-      <div class="bg-slate-900/80 backdrop-blur-xl border border-pink-500/40 rounded-3xl p-8 md:p-10 shadow-2xl shadow-pink-900/40 text-center relative overflow-hidden">
-        <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-500/20 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl pointer-events-none"></div>
-
-        <h2 class="font-cursive text-4xl text-pink-300 mb-6 font-bold">Untuk Michelle... ✨</h2>
-        
-        <div class="space-y-4 text-slate-200 leading-relaxed text-base md:text-lg">
-          <p>
-            Dari semua obrolan, tawa, dan cerita yang udah kita lalui bersama, aku makin yakin sama satu hal. Kehadiran kamu tuh bawa warna dan ketenangan tersendiri di hidup aku.
-          </p>
-          <p>
-            Aku suka cara kamu cerita, cara kamu merespons hal-hal kecil, dan gimana kita bisa nyambung dengan begitu alaminya. Jujur, perasaan ini tumbuh makin dalam seiring berjalannya waktu.
-          </p>
-          <p class="font-semibold text-pink-300 pt-2">
-            Michellee, maukah kamu berjalan lebih jauh lagi bareng aku? 
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Popup / Modal Bunga -->
-  <div id="flower-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-pink-400/50 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative transform transition-all scale-95 opacity-0" id="modal-card">
-      <div id="modal-flower-icon" class="text-6xl mb-4">🌸</div>
-      <p id="modal-text" class="text-lg text-pink-100 font-medium leading-relaxed mb-6"></p>
-      <button onclick="closeModal()" class="px-6 py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold rounded-full shadow-lg transition duration-200">
-        Tutup ✨
-      </button>
-    </div>
+    <!-- Teks Akhir -->
+    <div class="love-text" id="loveText">I Love You</div>
   </div>
 
   <script>
-    const music = document.getElementById('bg-music');
-    let isMusicPlaying = false;
+    // Koordinat matematika untuk membentuk pola Hati (Heart shape)
+    const heartContainer = document.getElementById('heart-container');
+    const loveText = document.getElementById('loveText');
+    
+    // Matriks pola bentuk hati (13x13 grid)
+    const heartPattern = [
+      [0,0,1,1,0,0,0,0,1,1,0,0],
+      [0,1,1,1,1,0,0,1,1,1,1,0],
+      [1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1],
+      [0,1,1,1,1,1,1,1,1,1,1,0],
+      [0,0,1,1,1,1,1,1,1,1,0,0],
+      [0,0,0,1,1,1,1,1,1,0,0,0],
+      [0,0,0,0,1,1,1,1,0,0,0,0],
+      [0,0,0,0,0,1,1,0,0,0,0,0]
+    ];
 
-    // Putar lagu saat klik pertama kali (kebijakan browser melarang autoplay tanpa interaksi)
-    function playAudio() {
-      if (!isMusicPlaying) {
-        music.play().then(() => {
-          isMusicPlaying = true;
-        }).catch(() => {});
+    const elements = [];
+
+    // Generate elemen-elemen Love berdasarkan grid
+    const rows = heartPattern.length;
+    const cols = heartPattern[0].length;
+    const itemSize = 18; // ukuran jarak tiap ikon love
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (heartPattern[r][c] === 1) {
+          const div = document.createElement('div');
+          div.style.left = (c * itemSize) + 'px';
+          div.style.top = (r * itemSize) + 'px';
+          heartContainer.appendChild(div);
+          elements.push(div);
+        }
       }
     }
 
-    document.body.addEventListener('click', playAudio, { once: true });
+    // Animasi pemunculan ikon love satu per satu dari atas ke bawah
+    function animateHeart() {
+      // Tampilkan kontainer
+      heartContainer.style.visibility = 'visible';
 
-    // Data kata-kata pesan tiap bunga
-    const flowerMessages = {
-      1: {
-        icon: "🌸",
-        text: "Aku senang waktu pertama kita ngobrol dengan momennn yang sangat baik"
-      },
-      2: {
-        icon: "🌺",
-        text: "Aku juga senang bisa menemani mu melewati hal hak yang mungkin tidak bisa kamu bayangkan dann pastinya yappingan kamuu heheh"
-      },
-      3: {
-        icon: "🌷",
-        text: "Makasihh yaa cel untuk semuaa nya. Dan website ini lah yang menjawab semua kebingungan dan kegalauan aku"
-      },
-      4: {
-        icon: "🌻",
-        text: "Scroll ke bawah yaa sampe ada kotak pesan"
-      }
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('show');
+        }, index * 30); // Jeda tiap ikon 30ms
+      });
+
+      // Tampilkan teks "I Love You" setelah animasi hati selesai
+      setTimeout(() => {
+        loveText.classList.add('show');
+      }, elements.length * 30 + 300);
+    }
+
+    // Jalankan animasi setelah jeda singkat
+    window.onload = () => {
+      setTimeout(animateHeart, 1000);
     };
-
-    // Fungsi Modal Interaktif
-    function openModal(id) {
-      playAudio();
-      const modal = document.getElementById('flower-modal');
-      const modalCard = document.getElementById('modal-card');
-      const modalText = document.getElementById('modal-text');
-      const modalIcon = document.getElementById('modal-flower-icon');
-
-      modalIcon.innerText = flowerMessages[id].icon;
-      modalText.innerText = `"${flowerMessages[id].text}"`;
-
-      modal.classList.remove('hidden');
-      setTimeout(() => {
-        modalCard.classList.remove('scale-95', 'opacity-0');
-        modalCard.classList.add('scale-100', 'opacity-100');
-      }, 10);
-    }
-
-    function closeModal() {
-      const modal = document.getElementById('flower-modal');
-      const modalCard = document.getElementById('modal-card');
-
-      modalCard.classList.remove('scale-100', 'opacity-100');
-      modalCard.classList.add('scale-95', 'opacity-0');
-      setTimeout(() => {
-        modal.classList.add('hidden');
-      }, 200);
-    }
-
-    // Generator Bintang Kelap-kelip
-    const starsContainer = document.getElementById('stars-container');
-    const totalStars = 70;
-    for (let i = 0; i < totalStars; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      const size = Math.random() * 3 + 1;
-      star.style.width = `${size}px`;
-      star.style.height = `${size}px`;
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-      star.style.animationDelay = `${Math.random() * 3}s`;
-      starsContainer.appendChild(star);
-    }
-
-    // Generator Kelopak Bunga Gugur
-    const petalsContainer = document.getElementById('petals-container');
-    const totalPetals = 20;
-    for (let i = 0; i < totalPetals; i++) {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      const size = Math.random() * 12 + 10;
-      petal.style.width = `${size}px`;
-      petal.style.height = `${size}px`;
-      petal.style.left = `${Math.random() * 100}%`;
-      petal.style.animationDuration = `${Math.random() * 5 + 6}s`;
-      petal.style.animationDelay = `${Math.random() * 5}s`;
-      petalsContainer.appendChild(petal);
-    }
   </script>
 </body>
 </html>

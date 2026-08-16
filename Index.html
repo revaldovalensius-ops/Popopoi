@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Of Love</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f3f3f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 500px;
+      height: 450px;
+      background-color: #ffffff;
+      border-radius: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Karakter Stickman */
+    .character {
+      position: absolute;
+      left: 50px;
+      bottom: 60px;
+      width: 100px;
+      height: 120px;
+    }
+
+    /* Teks "biu" di dekat tiupan */
+    .biu-text {
+      position: absolute;
+      left: 140px;
+      bottom: 125px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      animation: fadeIn 0.5s ease-in forwards;
+      animation-delay: 0.8s;
+      opacity: 0;
+    }
+
+    /* CSS seperti yang ada di video (lanjutan & penyesuaian) */
+    .love.block {
+      right: 0;
+      position: absolute;
+      visibility: hidden;
+      background-color: yellow;
+    }
+
+    .love.block div {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      /* Menggunakan ikon SVG Love bawaan agar tidak perlu download gambar */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e0245e'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;
+      transform: scale(0);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    }
+
+    .love.block div.show {
+      opacity: 1;
+      transform: scale(0.6);
+    }
+
+    /* Area Formasi Hati */
+    #heart-container {
+      position: absolute;
+      right: 40px;
+      top: 40px;
+      width: 260px;
+      height: 260px;
+    }
+
+    /* Teks "I Love You" */
+    .love-text {
+      position: absolute;
+      bottom: 70px;
+      right: 75px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.8s ease;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .love-text.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- SVG Stickman Character -->
+    <svg class="character" viewBox="0 0 100 120">
+      <!-- Kepala -->
+      <circle cx="45" cy="35" r="22" stroke="#000" stroke-width="3.5" fill="none" />
+      <!-- Mata -->
+      <circle cx="40" cy="32" r="2.5" fill="#000" />
+      <circle cx="52" cy="32" r="2.5" fill="#000" />
+      <!-- Senyum -->
+      <path d="M 40 42 Q 46 47 52 42" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <!-- Badan -->
+      <path d="M 45 57 Q 40 85 40 105" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <!-- Tangan Kiri (Meniup/Pose) -->
+      <path d="M 42 70 C 55 65, 65 60, 75 58" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <!-- Tangan Kanan -->
+      <path d="M 42 70 C 35 80, 25 85, 20 90" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <!-- Kaki Kiri -->
+      <path d="M 40 105 L 30 118" stroke="#000" stroke-width="3.5" stroke-linecap="round" />
+      <!-- Kaki Kanan -->
+      <path d="M 40 105 L 52 118" stroke="#000" stroke-width="3.5" stroke-linecap="round" />
+    </svg>
+
+    <div class="biu-text">biu~</div>
+
+    <!-- Container tempat ditempatkannya elemen love -->
+    <div id="heart-container" class="love block"></div>
+
+    <!-- Teks Akhir -->
+    <div class="love-text" id="loveText">I Love You</div>
+  </div>
+
+  <script>
+    // Koordinat matematika untuk membentuk pola Hati (Heart shape)
+    const heartContainer = document.getElementById('heart-container');
+    const loveText = document.getElementById('loveText');
+    
+    // Matriks pola bentuk hati (13x13 grid)
+    const heartPattern = [
+      [0,0,1,1,0,0,0,0,1,1,0,0],
+      [0,1,1,1,1,0,0,1,1,1,1,0],
+      [1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1],
+      [0,1,1,1,1,1,1,1,1,1,1,0],
+      [0,0,1,1,1,1,1,1,1,1,0,0],
+      [0,0,0,1,1,1,1,1,1,0,0,0],
+      [0,0,0,0,1,1,1,1,0,0,0,0],
+      [0,0,0,0,0,1,1,0,0,0,0,0]
+    ];
+
+    const elements = [];
+
+    // Generate elemen-elemen Love berdasarkan grid
+    const rows = heartPattern.length;
+    const cols = heartPattern[0].length;
+    const itemSize = 18; // ukuran jarak tiap ikon love
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (heartPattern[r][c] === 1) {
+          const div = document.createElement('div');
+          div.style.left = (c * itemSize) + 'px';
+          div.style.top = (r * itemSize) + 'px';
+          heartContainer.appendChild(div);
+          elements.push(div);
+        }
+      }
+    }
+
+    // Animasi pemunculan ikon love satu per satu dari atas ke bawah
+    function animateHeart() {
+      // Tampilkan kontainer
+      heartContainer.style.visibility = 'visible';
+
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('show');
+        }, index * 30); // Jeda tiap ikon 30ms
+      });
+
+      // Tampilkan teks "I Love You" setelah animasi hati selesai
+      setTimeout(() => {
+        loveText.classList.add('show');
+      }, elements.length * 30 + 300);
+    }
+
+    // Jalankan animasi setelah jeda singkat
+    window.onload = () => {
+      setTimeout(animateHeart, 1000);
+    };
+  </script>
+</body>
+</html>

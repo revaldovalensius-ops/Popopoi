@@ -1,213 +1,148 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heart Of Love</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: #f3f3f3;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-    }
-
-    .container {
-      position: relative;
-      width: 500px;
-      height: 450px;
-      background-color: #ffffff;
-      border-radius: 30px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Karakter Stickman */
-    .character {
-      position: absolute;
-      left: 50px;
-      bottom: 60px;
-      width: 100px;
-      height: 120px;
-    }
-
-    /* Teks "biu" di dekat tiupan */
-    .biu-text {
-      position: absolute;
-      left: 140px;
-      bottom: 125px;
-      font-size: 14px;
-      font-weight: bold;
-      color: #333;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      animation: fadeIn 0.5s ease-in forwards;
-      animation-delay: 0.8s;
-      opacity: 0;
-    }
-
-    /* CSS seperti yang ada di video (lanjutan & penyesuaian) */
-    .love.block {
-      right: 0;
-      position: absolute;
-      visibility: hidden;
-      background-color: yellow;
-    }
-
-    .love.block div {
-      width: 40px;
-      height: 40px;
-      position: absolute;
-      /* Menggunakan ikon SVG Love bawaan agar tidak perlu download gambar */
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e0245e'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      opacity: 0;
-      transform: scale(0);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-    }
-
-    .love.block div.show {
-      opacity: 1;
-      transform: scale(0.6);
-    }
-
-    /* Area Formasi Hati */
-    #heart-container {
-      position: absolute;
-      right: 40px;
-      top: 40px;
-      width: 260px;
-      height: 260px;
-    }
-
-    /* Teks "I Love You" */
-    .love-text {
-      position: absolute;
-      bottom: 70px;
-      right: 75px;
-      font-size: 28px;
-      font-weight: bold;
-      color: #333;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.8s ease;
-      font-family: 'Arial', sans-serif;
-    }
-
-    .love-text.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You <3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #1a0514;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            background-color: #1a0514;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- SVG Stickman Character -->
-    <svg class="character" viewBox="0 0 100 120">
-      <!-- Kepala -->
-      <circle cx="45" cy="35" r="22" stroke="#000" stroke-width="3.5" fill="none" />
-      <!-- Mata -->
-      <circle cx="40" cy="32" r="2.5" fill="#000" />
-      <circle cx="52" cy="32" r="2.5" fill="#000" />
-      <!-- Senyum -->
-      <path d="M 40 42 Q 46 47 52 42" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round" />
-      <!-- Badan -->
-      <path d="M 45 57 Q 40 85 40 105" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
-      <!-- Tangan Kiri (Meniup/Pose) -->
-      <path d="M 42 70 C 55 65, 65 60, 75 58" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
-      <!-- Tangan Kanan -->
-      <path d="M 42 70 C 35 80, 25 85, 20 90" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round" />
-      <!-- Kaki Kiri -->
-      <path d="M 40 105 L 30 118" stroke="#000" stroke-width="3.5" stroke-linecap="round" />
-      <!-- Kaki Kanan -->
-      <path d="M 40 105 L 52 118" stroke="#000" stroke-width="3.5" stroke-linecap="round" />
-    </svg>
+    <canvas id="flowerCanvas" width="600" height="700"></canvas>
 
-    <div class="biu-text">biu~</div>
+    <script>
+        const canvas = document.getElementById("flowerCanvas");
+        const ctx = canvas.getContext("2d");
 
-    <!-- Container tempat ditempatkannya elemen love -->
-    <div id="heart-container" class="love block"></div>
+        // Pindahkan titik pusat koordinat (0,0) ke tengah canvas
+        ctx.translate(canvas.width / 2, canvas.height / 2 - 20);
 
-    <!-- Teks Akhir -->
-    <div class="love-text" id="loveText">I Love You</div>
-  </div>
+        const WORD = "my love";
 
-  <script>
-    // Koordinat matematika untuk membentuk pola Hati (Heart shape)
-    const heartContainer = document.getElementById('heart-container');
-    const loveText = document.getElementById('loveText');
-    
-    // Matriks pola bentuk hati (13x13 grid)
-    const heartPattern = [
-      [0,0,1,1,0,0,0,0,1,1,0,0],
-      [0,1,1,1,1,0,0,1,1,1,1,0],
-      [1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1],
-      [0,1,1,1,1,1,1,1,1,1,1,0],
-      [0,0,1,1,1,1,1,1,1,1,0,0],
-      [0,0,0,1,1,1,1,1,1,0,0,0],
-      [0,0,0,0,1,1,1,1,0,0,0,0],
-      [0,0,0,0,0,1,1,0,0,0,0,0]
-    ];
+        // Fungsi menggambar kelopak bunga dari deretan teks
+        function drawPetal(bx, by, baseAngleRad, length, width, color, points = 26) {
+            ctx.fillStyle = color;
+            ctx.font = "bold 8px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
 
-    const elements = [];
+            const cosA = Math.cos(baseAngleRad);
+            const sinA = Math.sin(baseAngleRad);
 
-    // Generate elemen-elemen Love berdasarkan grid
-    const rows = heartPattern.length;
-    const cols = heartPattern[0].length;
-    const itemSize = 18; // ukuran jarak tiap ikon love
+            for (let i = 0; i <= points; i++) {
+                const theta = (i * Math.PI) / points;
+                const out = length * Math.sin(theta);
+                const side = width * Math.sin(theta) * Math.cos(theta);
+                const rx = out * cosA - side * sinA;
+                const ry = out * sinA + side * cosA;
 
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        if (heartPattern[r][c] === 1) {
-          const div = document.createElement('div');
-          div.style.left = (c * itemSize) + 'px';
-          div.style.top = (r * itemSize) + 'px';
-          heartContainer.appendChild(div);
-          elements.push(div);
+                ctx.fillText(WORD, bx + rx, -(by + ry));
+            }
         }
-      }
-    }
 
-    // Animasi pemunculan ikon love satu per satu dari atas ke bawah
-    function animateHeart() {
-      // Tampilkan kontainer
-      heartContainer.style.visibility = 'visible';
+        // Fungsi menggambar daun
+        function drawLeaf(bx, by, angleDeg, length, width) {
+            drawPetal(bx, by, (angleDeg * Math.PI) / 180, length, width, "#2e8b57", 22);
+        }
 
-      elements.forEach((el, index) => {
-        setTimeout(() => {
-          el.classList.add('show');
-        }, index * 30); // Jeda tiap ikon 30ms
-      });
+        // Simulasi pergerakan melengkung batang (Turtle circle)
+        let tx = 0, ty = -30, heading = (260 * Math.PI) / 180;
 
-      // Tampilkan teks "I Love You" setelah animasi hati selesai
-      setTimeout(() => {
-        loveText.classList.add('show');
-      }, elements.length * 30 + 300);
-    }
+        function drawStemArc(radius, extentDeg) {
+            ctx.strokeStyle = "#2e8b57";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(tx, -ty);
 
-    // Jalankan animasi setelah jeda singkat
-    window.onload = () => {
-      setTimeout(animateHeart, 1000);
-    };
-  </script>
+            const steps = Math.abs(extentDeg) * 2;
+            const stepAngle = ((extentDeg / steps) * Math.PI) / 180;
+            const stepDist = (2 * Math.PI * radius * (Math.abs(extentDeg) / 360)) / steps;
+
+            for (let s = 0; s < steps; s++) {
+                tx += Math.cos(heading) * stepDist;
+                ty += Math.sin(heading) * stepDist;
+                heading += stepAngle;
+                ctx.lineTo(tx, -ty);
+            }
+            ctx.stroke();
+            return { x: tx, y: ty };
+        }
+
+        // 1. Gambar Batang dan Daun
+        const pos1 = drawStemArc(250, 25);
+        drawLeaf(pos1.x, pos1.y, 160, 50, 25);
+
+        drawStemArc(250, 20);
+        const pos2 = { x: tx, y: ty };
+        drawLeaf(pos2.x, pos2.y, 20, 55, 28);
+
+        drawStemArc(250, 30);
+
+        // 2. Gambar Ring Kelopak Bunga
+        const rings = [
+            { radius: 0, count: 4, length: 40, width: 15, color: "#ffe6f2", offset: 45 },
+            { radius: 10, count: 5, length: 50, width: 25, color: "#ffb3d9", offset: 0 },
+            { radius: 20, count: 7, length: 70, width: 35, color: "#ff66b2", offset: 30 },
+            { radius: 30, count: 9, length: 90, width: 45, color: "#ff1493", offset: 15 },
+            { radius: 40, count: 12, length: 110, width: 55, color: "#c71585", offset: 0 },
+        ];
+
+        for (const ring of rings) {
+            for (let i = 0; i < ring.count; i++) {
+                const angle = (360 / ring.count) * i + ring.offset;
+                const rad = (angle * Math.PI) / 180;
+                const bx = ring.radius * Math.cos(rad);
+                const by = ring.radius * Math.sin(rad);
+
+                drawPetal(bx, by, rad, ring.length, ring.width, ring.color);
+            }
+        }
+
+        // 3. Simbol Hati Melayang
+        ctx.fillStyle = "#ff99cc";
+        ctx.font = "bold 12px Courier";
+        for (let i = 0; i < 12; i++) {
+            const x = (Math.random() - 0.5) * 500;
+            const y = (Math.random() - 0.5) * 500;
+            if (Math.hypot(x, y) > 130) {
+                ctx.fillText("<3", x, -y);
+            }
+        }
+
+        // 4. Teks Penutup Interactive
+        ctx.fillStyle = "white";
+        ctx.font = "italic 11px Arial";
+        ctx.fillText("Klik di mana saja untuk menambah <3", 0, 310);
+
+        // Efek Interaktif: Klik untuk menambah hati
+        canvas.addEventListener("click", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left - canvas.width / 2;
+            const clickY = e.clientY - rect.top - (canvas.height / 2 - 20);
+
+            ctx.fillStyle = "#ff99cc";
+            ctx.font = "bold 14px Courier";
+            ctx.fillText("<3", clickX, clickY);
+        });
+    </script>
 </body>
 </html>
